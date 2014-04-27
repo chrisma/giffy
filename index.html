@@ -16,17 +16,11 @@
 							"searchType=image&" +
 							"fileType=gif&" +
 							"callback=?&" +
-							"num=5&" +
-							"fields=items(image,link)&" +
+							"fields=items(link)&" +
 							"q=" + query.replace('_',' ');
 				$.getJSON(url, function(data){
-					var max = {image:{byteSize:0}};
-					$.each(data.items, function(key, item) {
-						if (item.image.byteSize > max.image.byteSize) {
-							max = item;
-						};
-					});
-					$('#pic').attr("src",max.link);
+					var random_item = data.items[Math.floor(Math.random() * data.items.length)]
+					$('#pic').attr("src", random_item.link);
 				});
 			});
 		</script>
