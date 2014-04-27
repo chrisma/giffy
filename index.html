@@ -7,25 +7,28 @@
 	</head>
 	<body>
 		<script type="text/javascript">
-		var query = window.location.hash.substring(1);
-		var url = 	"https://www.googleapis.com/customsearch/v1?" +
-					"key=AIzaSyDRHf0zntA0lBR70AUzs1enuIJND91BqQw&" +
-					"cx=006579584212078332539:2fmctzwzsjm&" +
-					"searchType=image&" +
-					"fileType=gif&" +
-					"callback=?&" +
-					"num=5&" +
-					"fields=items(image,link)&" +
-					"q=" + query.replace('_',' ');
-		$.getJSON(url, function(data){
-			var max = {image:{byteSize:0}};
-			$.each(data.items, function(key, item) {
-				if (item.image.byteSize > max.image.byteSize) {
-					max = item;
-				};
+			$(document).ready(function(){
+				var query = window.location.hash.substring(1);
+				if (!query) {return};
+				var url = 	"https://www.googleapis.com/customsearch/v1?" +
+							"key=AIzaSyDRHf0zntA0lBR70AUzs1enuIJND91BqQw&" +
+							"cx=006579584212078332539:2fmctzwzsjm&" +
+							"searchType=image&" +
+							"fileType=gif&" +
+							"callback=?&" +
+							"num=5&" +
+							"fields=items(image,link)&" +
+							"q=" + query.replace('_',' ');
+				$.getJSON(url, function(data){
+					var max = {image:{byteSize:0}};
+					$.each(data.items, function(key, item) {
+						if (item.image.byteSize > max.image.byteSize) {
+							max = item;
+						};
+					});
+					$('#pic').attr("src",max.link);
+				});
 			});
-			$('#pic').attr("src",max.link);
-		});
 		</script>
 		<img id="pic">
 	</body>
